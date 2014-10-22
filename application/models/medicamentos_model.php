@@ -100,7 +100,7 @@ class Medicamentos_Model  extends CI_Model  {
     function find_medicamento_reff($id_registro = null, $id_usr = null)
     {
         $query = 'SELECT t1.id, t1.estado, t1.precio_referencia, t1.link, t1.cantidad, t1.comentario, t1.casual_no_precio, t2.medicamentos, t3.nombre as nombre_fuente, t3.link as link_fuente,
-                    t3.nombre_archivo, t3.nombre_archivo_original, t4.nombre as nombre_pais, t4.moneda, t3.tipo_precio
+                    t2.atc_invima, t2.descripcion_atc ,t3.nombre_archivo, t3.nombre_archivo_original, t4.nombre as nombre_pais, t4.moneda, t3.tipo_precio
                     from precio_reff as t1
                     inner join medicamentos as t2
                     on t1.id_medicamento = t2.id
@@ -154,7 +154,7 @@ class Medicamentos_Model  extends CI_Model  {
     }
 
     function generar_excel_model(){
-        $sql = 'SELECT t2.id_mercado, t2.descripcion_mercado, t2.atc_invima, t2.descripcion_atc, t2.forma_farmaceutica, t2.expediente_ficha, t2.expediente, t2.medicamentos, t4.nombre as pais, t3.nombre as fuente, t3.tipo_precio, t4.moneda, t1.precio_referencia, t1.cantidad, t1.precio_por_unidad, t1.casual_no_precio, t1.link, t1.nombre_archivo
+        $sql = 'SELECT t2.id_mercado, t2.descripcion_mercado, t2.atc_invima, t2.descripcion_atc, t2.forma_farmaceutica, t2.expediente_ficha, t2.expediente, t2.medicamentos, t4.nombre as pais, t3.nombre as fuente, t3.tipo_precio, t4.moneda, t1.precio_referencia, t1.cantidad, t1.precio_por_unidad, t1.casual_no_precio, t1.link, t1.nombre_archivo, t1.nombre_archivo_original
                     from precio_reff as t1
                     inner join medicamentos as t2
                     on t1.id_medicamento = t2.id
@@ -218,7 +218,7 @@ class Medicamentos_Model  extends CI_Model  {
                 on t1.id = t2.user_id
                 inner join precio_reff as t3
                 on t3.usuario_asignado = t1.id
-                and t2.group_id = 3
+                and t2.group_id in(2,3)
                 group by t1.id";
 
         return $this->db->query($sql)->result_array();

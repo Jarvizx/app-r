@@ -3,6 +3,7 @@
 		<div class="col-md-12">
 			<?php foreach ($dta_reff as $key => $value): ?>	
 				<h3>Nombre Medicamento: <?php echo $value['medicamentos']; ?></h3>
+				<h4>ATC: <?php echo $value['atc_invima']; ?> | Descripción ATC: <?php echo $value['descripcion_atc']; ?></h4>
 			<?php endforeach ?>
 		</div>
 		<div class="col-md-6">
@@ -61,7 +62,7 @@
 			<?php echo form_open_multipart('/medicamentos/guardar_referencia/'.$ruta, array('id' => 'form-referencia', 'role' => 'form')); ?>
 			<div class="form-group">
 				<label for="descripcion">Precio Referencia</label>
-				<input class="form-control block-precio precio_referencia" type="text" name="precio_referencia" value="<?php echo $dta_reff[0]['precio_referencia']; ?>" <?php echo (!empty($dta_reff[0]['casual_no_precio'])) ? 'disabled': '';?> >
+				<input class="form-control block-precio precio_referencia number" type="text" name="precio_referencia" value="<?php echo $dta_reff[0]['precio_referencia']; ?>" <?php echo (!empty($dta_reff[0]['casual_no_precio'])) ? 'disabled': '';?> >
 			</div>
 			<div class="form-group">
 				<label for="descripcion">Cantidad</label>

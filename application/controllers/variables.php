@@ -26,6 +26,7 @@ class Variables extends CI_Controller {
 	    }
 
 	    $this->user = $this->ion_auth->user()->row();
+	    date_default_timezone_set('America/Bogota');
 
 	}
 

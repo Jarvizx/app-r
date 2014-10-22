@@ -23,6 +23,7 @@ class Medicamentos extends CI_Controller {
 			redirect('auth/login', 'refresh');
 
 	    }
+	    date_default_timezone_set('America/Bogota');
 
 	    $this->user = $this->ion_auth->user()->row();
 
@@ -260,10 +261,15 @@ class Medicamentos extends CI_Controller {
 
 			$id_reff = $this->input->post('id_reff', true);
 
+
+			$precio_referencia = (empty($this->input->post('precio_referencia', true))) ? NULL : $this->input->post('precio_referencia', true);
+			$cantidad = (empty($this->input->post('cantidad_referencia', true))) ? NULL: $this->input->post('cantidad_referencia', true);
+			$precio_por_unidad = (empty($this->input->post('precio_por_unidad', true))) ? NULL : $this->input->post('precio_por_unidad', true);
+
 			$reff = array(
-					"precio_referencia" => $this->input->post('precio_referencia', true),
-					"cantidad" => $this->input->post('cantidad_referencia', true),
-					"precio_por_unidad" => $this->input->post('precio_por_unidad', true),
+					"precio_referencia" => $precio_referencia,
+					"cantidad" => $cantidad,
+					"precio_por_unidad" => $precio_por_unidad,
 					"casual_no_precio" => $this->input->post('casual_no_precio', true),
 					"link" => $this->input->post('link', true),
 					"nombre_archivo" =>  (isset($config['file_name'])) ? $config['file_name'] : 'Sin Archivos Registrados',

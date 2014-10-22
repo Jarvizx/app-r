@@ -3,10 +3,11 @@
 <head>
 	<meta charset="utf-8">
 	<title></title>
-	<link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.js"></script>
-	<script type="text/javascript" src="http://www.piamed.org/p/assets/grocery_crud/themes/twitter-bootstrap/js/jquery.form.js"></script>
-	<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
+	<script type="text/javascript" src="/assets/js/jquery-1.11.1.js"></script>
+	<script type="text/javascript" src="/assets/js/jquery.form.js"></script>
+	<script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/assets/js/jquery.number.js"></script>
 </head>
 <body>
 <div class="container-fluid">
@@ -91,6 +92,10 @@
 		</div>
 	</div><!-- close row -->
 </div><!-- close <div class="container-fluid"> -->
-
+<script type="text/javascript">
+	$(document).on('ready', function(){
+		$('input.number').number( true, 2 );
+	});
+</script>
 </body>
 </html>

@@ -50,7 +50,12 @@
 							<td><?php echo $value['precio_por_unidad'];?></td>
 							<td><?php echo $value['casual_no_precio'];?></td>
 							<td><?php echo $value['link'];?></td>
-							<td><?php echo $value['nombre_archivo'];?></td>
+							<?php if ($value['nombre_archivo'] == 'Sin Archivos Registrados'): ?>
+								<td> <?php echo $value['nombre_archivo_original'];?> </td>
+							<?php else: ?>
+								<td> <a target="_blank" href="/assets/uploads/soportes/<?php echo $value['nombre_archivo'];?>"><?php echo $value['nombre_archivo_original'];?></a> </td>
+							<?php endif ?>
+
 						</tr>
 					<?php endforeach ?>
 				</tbody>

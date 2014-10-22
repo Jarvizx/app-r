@@ -9,6 +9,7 @@
 	  	<th>Moneda</th>
 	  	<th>Fuentes</th>
 	  	<th>Tipo precio</th>
+	  	<th></th>
 	  </tr>
   </thead>
   <tbody>
@@ -18,6 +19,7 @@
 			<td><?php echo $value['moneda']; ?></td>
 			<td><?php echo $value['nombre_fuente']; ?></td>
 			<td><?php echo $value['tipo_precio']; ?></td>
+			<td><a href="/variables/editar_pais/<?php echo $value['id']; ?>">editar (Próximamente)</a> </td>
 		</tr>
   	<?php endforeach ?>
   </tbody>

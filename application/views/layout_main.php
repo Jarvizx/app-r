@@ -9,7 +9,6 @@
 	<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-12">
@@ -27,12 +26,40 @@
 			<?php endif ?>
 			<ul class="nav nav-pills nav-stacked" style="">
 
+			<?php //print_r($this->uri->uri_string); ?>
+			<?php 
+				/*
+					1 admin
+					2 coordinador
+					3 chinomatico
+				*/
+			/*$menu = array(
+								'Inicio' => array(
+													'url' => '/',
+													'hide' => array(1,2,3)),
+								'Agregar fuentes' => array(
+													'url' => '/variables/agregar/fuentes',
+													'hide' => array(3)),
+								'Variables del Sistema' => array(
+													'url' => '/variables',
+													'hide' => array(3)),
+								'Ingresar Medicamentos' => array(
+													'url' => '/medicamentos/agregar',
+													'hide' => array(3)),
+								'Asignar Datos' => array(
+													'url' => '/medicamentos/asignar'),
+								); */
+			?>
+
 				<li>
 					<a href="/">Inicio</a>
 				</li>
 				<?php // donde 1 es admin y 2 es cordinador
 						if(reset($this->ion_auth->get_users_groups($this->user->id)->result())->id == 1
 					  	|| reset($this->ion_auth->get_users_groups($this->user->id)->result())->id == 2): ?>
+				<li>
+					<a href="/variables/agregar_fuentes">Agregar fuentes</a>
+				</li>
 				<li>
 					<a href="/variables">Variables del Sistema</a>
 				</li>

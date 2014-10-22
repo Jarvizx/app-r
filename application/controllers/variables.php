@@ -56,6 +56,18 @@ class Variables extends CI_Controller {
 		
 		$this->layout->view('variables/pais', $data);
 	}
+	function editar_pais($id_pais = null){
+		if ($id_pais == null) {
+			redirect('variables/pais', 'refresh');
+		}
+
+		$this->load->model('variables_model');
+		
+		$data['paisfuente'] = $this->variables_model->find_pais_fuente_id($id_pais)->result_array();
+		$data['tipo_precio'] = $this->variables_model->find_tipo_precio();
+		
+		$this->layout->view('variables/editar-pais', $data);
+	}
 
 	function agregar_pais(){
 		
@@ -82,21 +94,24 @@ class Variables extends CI_Controller {
 				    $files = $_FILES;
 				    $cpt = count($_FILES['userfile']['name']);
 
-				    for($i=1; $i<=$cpt; $i++)
-				    {	
-				        $_FILES['userfile']['name'] = $files['userfile']['name'][$i];
-				        $_FILES['userfile']['type'] = $files['userfile']['type'][$i];
-				        $_FILES['userfile']['tmp_name'] = $files['userfile']['tmp_name'][$i];
-				        $_FILES['userfile']['error'] = $files['userfile']['error'][$i];
-				        $_FILES['userfile']['size'] = $files['userfile']['size'][$i];    
+				    for($c=1; $c<=$cpt; $c++)
+				    {
+				    	if (!empty($files['userfile']['name'][$c])) {
+					        $_FILES['userfile']['name'] = $files['userfile']['name'][$c];
+					        $_FILES['userfile']['type'] = $files['userfile']['type'][$c];
+					        $_FILES['userfile']['tmp_name'] = $files['userfile']['tmp_name'][$c];
+					        $_FILES['userfile']['error'] = $files['userfile']['error'][$c];
+					        $_FILES['userfile']['size'] = $files['userfile']['size'][$c];    
 
-				    	$upload_opt = $this->set_upload_options();
-				    	
-				    	if (!empty($upload_opt)) {
-				    		$upload_opt_d[$i] = $upload_opt;
-					    	$retorno_config = $this->upload->initialize($upload_opt);
-					    	$this->upload->do_upload();
-				    	}
+					    	$upload_opt = $this->set_upload_options();
+					    	
+					    	if (!empty($upload_opt)) {
+					    		$upload_opt_d[$c] = $upload_opt;
+						    	$retorno_config = $this->upload->initialize($upload_opt);
+						    	$this->upload->do_upload();
+					    	}
+			    		}	
+
 					}
 			    }
 
@@ -129,30 +144,8 @@ class Variables extends CI_Controller {
 			$this->session->set_flashdata('message', 'fuentes agregadas exitosamente');	
 			redirect('variables/pais', 'refresh');
 
-			//endfile 
-			/*
-			
-			// este debe ir en el foreach de asignar ! tenerlo presente 
-
-			//rename file 
-			//$config['allowed_types'] = 'text/plain|text/anytext|csv|.csv|text/x-comma-separated-values|text/comma-separated-values|application/octet-stream|application/vnd.ms-excel|application/x-csv|text/x-csv|text/csv|application/csv|application/excel|application/vnd.msexcel';
-
-
-			if (!$this->upload->do_upload())
-			{
-				$error = array('error' => $this->upload->display_errors());
-				$this->layout->view('medicamentos/agregar', $error);
-			}
-			else
-			{
-				$data = array('upload_data' => $this->upload->data());
-
-			//endfile 
-			*/
-
-
-
 		}else{
+
 			$this->load->model('variables_model');
 			$data['tipo_precio'] = $this->variables_model->find_tipo_precio();
 			$this->layout->view('variables/agregar-pais', $data);
@@ -198,6 +191,62 @@ class Variables extends CI_Controller {
 
 		    return $config;
 		}
+	}
+	function agregar_fuentes()
+	{
+		$this->load->model('variables_model');
+		if ($_POST) {
+			$this->load->library('upload');
+			$dPost = $this->input->post();
+
+			$i = 0;
+			// si no selecciona un tipo de fuente, no es posible guardar la referencia, (falta la validacion)
+			foreach($dPost['tipo-precio'] as $key => $value) {
+				//here file
+			    if (!empty($_FILES['userfile']['name'])) {  
+				    	$upload_opt = $this->set_upload_options();
+				    	
+				    	if (!empty($upload_opt)) {
+				    		$upload_opt_d = $upload_opt;
+					    	$retorno_config = $this->upload->initialize($upload_opt);
+					    	$this->upload->do_upload();
+				    	}
+			    }
+
+				foreach ($value as $keytipo => $valuetipo) {
+
+					$dta[$i]['id'] = null;
+					$dta[$i]['id_pais'] = $this->input->post('pais', true);
+					$dta[$i]['nombre'] = $dPost['nombre-fuente']	;
+					$dta[$i]['link'] = $dPost['link-fuente']	;
+					if (!empty($upload_opt_d)) {
+						$nombre_archivo = $upload_opt_d['file_name'];
+						$nombre_archivo_o = $upload_opt_d['org_name'];
+					}else{
+						$nombre_archivo = 'Sin Archivos Registrados';
+						$nombre_archivo_o = 'Sin Archivos Registrados';
+					}					
+					$dta[$i]['nombre_archivo'] = $nombre_archivo;
+					$dta[$i]['nombre_archivo_original'] = $nombre_archivo_o;
+
+					$dta[$i]['tipo_precio'] = $valuetipo;
+					$dta[$i]['habilitado'] = 1;
+					$dta[$i]['fecha_registro'] = date("Y-m-d H:i:s");
+					$i++;
+				}
+					
+			}
+
+			$id_fuentes = $this->variables_model->guardar_fuentes($dta);
+
+
+			$this->session->set_flashdata('message', 'fuentes agregadas exitosamente');	
+			redirect('variables/pais', 'refresh');
+
+		}
+		$data['pais'] = $this->variables_model->find_pais();
+		$data['tipo_precio'] = $this->variables_model->find_tipo_precio();
+		$this->layout->view('variables/agregar-fuentes', $data);
 	}
 
 }

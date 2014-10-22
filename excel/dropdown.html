@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title>Dropdown cell type - Handsontable</title>
+
+  <!--
+  Loading Handsontable (full distribution that includes all dependencies apart from jQuery)
+  -->
+  <script data-jsfiddle="common" src="jquery.min.js"></script>
+  <script data-jsfiddle="common" src="jquery.handsontable.full.js"></script>
+  <link data-jsfiddle="common" rel="stylesheet" media="screen" href="jquery.handsontable.full.css">
+
+  <!--
+  Loading demo dependencies. They are used here only to enhance the examples on this page
+  -->
+
+
+  <script data-jsfiddle="common">
+    function getCarData() {
+      return [
+        ["Nissan", 2009, "black", "black"],
+        ["Nissan", 2006, "blue", "blue"],
+        ["Chrysler", 2004, "yellow", "black"],
+        ["Volvo", 2012, "white", "gray"]
+      ];
+    }
+  </script>
+</head>
+
+<body>
+
+
+<div class="wrapper">
+  <div class="wrapper-row">
+    <div id="global-menu-clone">
+
+    </div>
+
+    <div id="container">
+      <div class="columnLayout">
+
+        <div class="rowLayout">
+  <div class="descLayout">
+    <div class="pad" data-jsfiddle="example1">
+          <h2>Dropdown cell type</h2>
+
+          <p>This example shows the usage of the Dropdown feature.</p>
+
+          <p>Dropdown is based on <a href="autocomplete.html">Autocomplete</a> cell type. All options used by <code>autocomplete</code>
+            cell type apply to <code>dropdown</code> as well.</p>
+
+          <p>Internally, cell <code>{type: "dropdown"}</code> is equivalent to cell <code>{type: "autocomplete", strict: true, filter: false}</code>.</p>
+
+          <p>Therefore you can think of <code>dropdown</code> as a searchable <code>&lt;select&gt;</code>. </p>
+
+      <div id="example1"></div>
+
+      <p>
+        <button name="dump" data-dump="#example1" title="Prints current data source to Firebug/Chrome Dev Tools">Dump
+          data to console
+        </button>
+      </p>
+    </div>
+  </div>
+
+  <div class="codeLayout">
+    <div class="pad">
+      <div class="jsFiddle">
+        <button class="jsFiddleLink" data-runfiddle="example1">Edit in jsFiddle</button>
+      </div>
+
+      <script data-jsfiddle="example1">
+        $("#example1").handsontable({
+          data: getCarData(),
+          startRows: 7,
+          startCols: 4,
+          colHeaders: ["Car", "Year", "Chassis color", "Bumper color"],
+          columns: [
+            {},
+            {type: 'numeric'},
+            {
+              type: 'dropdown',
+              source: ["yellow", "red", "orange", "green", "blue", "gray", "black", "white"]
+            },
+            {
+              type: 'dropdown',
+              source: ["yellow", "red", "orange", "green", "blue", "gray", "black", "white"]
+            }
+          ]
+        });
+      </script>
+    </div>
+  </div>
+</div>
+
+        <div class="footer-text">Handsontable &copy; 2012-2014 Marcin Warpechowski and contributors.<br> Code and documentation
+          licensed under the The MIT License.
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<div id="outside-links-wrapper"></div>
+
+</body>
+</html>

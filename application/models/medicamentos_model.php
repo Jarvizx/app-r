@@ -1,19 +1,19 @@
 <?php
 class Medicamentos_Model  extends CI_Model  {
 
-	function __construct()
+    function __construct()
     {
         parent::__construct();
-		$this->load->database();
+        $this->load->database();
 
     }
 
     function mostrar_columnas()
     {
     
-    	$query = 'SHOW COLUMNS FROM medicamentos';
-    	$data = $this->db->query($query);
-    	return $data->result_array();
+        $query = 'SHOW COLUMNS FROM medicamentos';
+        $data = $this->db->query($query);
+        return $data->result_array();
 
     }
     function guardar_registro_medicamento_archivo($registro_array = null)
@@ -27,10 +27,10 @@ class Medicamentos_Model  extends CI_Model  {
 
     function guardar_medicamento_archivo($med_array = null)
     {
-    	if(!empty($med_array)){
+        if(!empty($med_array)){
             // f: https://ellislab.com/codeigniter/user-guide/database/active_record.html#insert
             return $this->db->insert_batch('medicamentos', $med_array);   
-    	}
+        }
 
     }
 
@@ -58,6 +58,8 @@ class Medicamentos_Model  extends CI_Model  {
                 $t3[$i]['comentario'] = null;
                 $t3[$i]['usuario_asignado'] = null;
                 $t3[$i]['orden'] = $keyf+1;
+                $t3[$i]['codigo_de_referencia'] = null;
+
                 $this->db->insert('precio_reff', $t3[$i]);
 
                 $i++;
@@ -99,8 +101,8 @@ class Medicamentos_Model  extends CI_Model  {
 
     function find_medicamento_reff($id_registro = null, $id_usr = null)
     {
-        $query = 'SELECT t1.id, t1.estado, t1.precio_referencia, t1.link, t1.cantidad, t1.comentario, t1.casual_no_precio, t2.medicamentos, t3.nombre as nombre_fuente, t3.link as link_fuente,
-                    t2.atc_invima, t2.descripcion_atc ,t3.nombre_archivo, t3.nombre_archivo_original, t4.nombre as nombre_pais, t4.moneda, t3.tipo_precio
+        $query = 'SELECT t1.id, t1.estado, t1.precio_referencia, t1.link, t1.cantidad, t1.codigo_de_referencia, t1.comentario, t1.casual_no_precio, t2.medicamentos, t3.nombre as nombre_fuente, t3.link as link_fuente,
+                    t2.atc_invima, t2.descripcion_atc, t2.forma_farmaceutica, t3.nombre_archivo, t3.nombre_archivo_original, t4.nombre as nombre_pais, t4.moneda, t3.tipo_precio
                     from precio_reff as t1
                     inner join medicamentos as t2
                     on t1.id_medicamento = t2.id
@@ -153,7 +155,7 @@ class Medicamentos_Model  extends CI_Model  {
         $this->db->update('precio_reff', $data);
     }
 
-    function generar_excel_model(){
+    function generar_consolidado(){
         $sql = 'SELECT t2.id_mercado, t2.descripcion_mercado, t2.atc_invima, t2.descripcion_atc, t2.forma_farmaceutica, t2.expediente_ficha, t2.expediente, t2.medicamentos, t4.nombre as pais, t3.nombre as fuente, t3.tipo_precio, t4.moneda, t1.precio_referencia, t1.cantidad, t1.precio_por_unidad, t1.casual_no_precio, t1.link, t1.nombre_archivo, t1.nombre_archivo_original
                     from precio_reff as t1
                     inner join medicamentos as t2
@@ -166,8 +168,8 @@ class Medicamentos_Model  extends CI_Model  {
         return $this->db->query($sql);
     }
 
-    function generar_excel_model_all(){
-        $sql = 'SELECT t2.id_mercado, t2.descripcion_mercado, t2.atc_invima, t2.descripcion_atc, t2.forma_farmaceutica, t2.expediente_ficha, t2.expediente, t2.medicamentos, t4.nombre as pais, t3.nombre as fuente, t3.tipo_precio, t4.moneda, t1.precio_referencia, t1.cantidad, t1.precio_por_unidad, t1.casual_no_precio, t1.link, t1.nombre_archivo
+    function generar_excel(){
+        $sql = "SELECT t2.id_mercado, t2.descripcion_mercado, t2.atc_invima, t2.descripcion_atc, t2.forma_farmaceutica, t2.expediente_ficha, t2.expediente, t2.medicamentos, t4.nombre as pais, t3.nombre as fuente, t3.tipo_precio, t4.moneda, t1.precio_referencia, t1.cantidad, t1.precio_por_unidad, t1.casual_no_precio, t1.link, if(t1.nombre_archivo='Sin Archivos Registrados','Sin Archivos Registrados',concat('http://wikiets.org/assets/uploads/soportes/',t1.nombre_archivo)) as archivo_soporte, t1.comentario, t1.codigo_de_referencia
                     from precio_reff as t1
                     inner join medicamentos as t2
                     on t1.id_medicamento = t2.id
@@ -175,7 +177,7 @@ class Medicamentos_Model  extends CI_Model  {
                     on t1.id_fuente = t3.id
                     inner join pais as t4
                     on t3.id_pais = t4.id
-                    where t1.estado = "Guardado"';
+                    where t1.estado = 'Guardado'";
         return $this->db->query($sql);
     }
 

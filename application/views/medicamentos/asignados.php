@@ -1,4 +1,4 @@
-<table class="table">
+<table id="t_asignados" class="table">
 	<thead>
 		<tr>
 			<th>Pais</th>
@@ -7,6 +7,13 @@
 			<th>Estado</th>
 		</tr>
 	</thead>
+	<tfoot>
+        <tr>
+            <th>Pais</th>
+			<th>Fuente</th>
+			<th>Nombre Medicamento</th>
+        </tr>
+    </tfoot>
 	<tbody>
 	<?php foreach ($medicamentos as $key => $value): ?>
 	<tr>
@@ -19,3 +26,31 @@
 	<?php endforeach ?>
 	</tbody>
 </table>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+    	$('#t_asignados').DataTable({
+    		initComplete: function () {
+	            var api = this.api();
+	 
+	            api.columns().indexes().flatten().each( function ( i ) {
+	                var column = api.column( i );
+	                var select = $('<select><option value=""></option></select>')
+	                    .appendTo( $(column.footer()).empty() )
+	                    .on( 'change', function () {
+	                        var val = $(this).val();
+	 
+	                        column
+	                            .search( val ? '^'+val+'$' : '', true, false )
+	                            .draw();
+	                    } );
+	 
+	                column.data().unique().sort().each( function ( d, j ) {
+	                    select.append( '<option value="'+d+'">'+d+'</option>' )
+	                } );
+	            } );
+	        }
+
+    	});
+	});
+</script>

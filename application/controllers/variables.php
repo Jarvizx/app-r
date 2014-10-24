@@ -47,8 +47,21 @@ class Variables extends CI_Controller {
 		$crud->set_theme('datatables');
 		$crud->set_table('tipo_precio');
 		$crud->columns('nombre');
+		$crud->unset_add();
+        $crud->unset_edit();
+        $crud->unset_delete();
+        $crud->unset_read();
+        $crud->unset_export();
+        $crud->unset_print();
+        $crud->callback_column('nombre',array($this,'_callback_webpage_url'));
+
 		$output = $crud->render();
 		$this->_example_output($output);
+	}
+
+	public function _callback_webpage_url($value, $row)
+	{
+		return "<a href='".site_url('admin/sub_webpages/'.$row->id)."'>$value</a>";
 	}
 
 	function pais(){

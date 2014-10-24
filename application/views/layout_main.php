@@ -4,10 +4,12 @@
 	<meta charset="utf-8">
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/assets/css/jquery.dataTables.css">
 	<script type="text/javascript" src="/assets/js/jquery-1.11.1.js"></script>
 	<script type="text/javascript" src="/assets/js/jquery.form.js"></script>
 	<script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/assets/js/jquery.number.js"></script>
+	<script type="text/javascript" src="/assets/js/jquery.dataTables.min.js"></script>
 </head>
 <body>
 <div class="container-fluid">

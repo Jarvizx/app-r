@@ -12,6 +12,7 @@ class Medicamentos extends CI_Controller {
 		$this->load->library('ion_auth');
 	    $this->load->library('layout');
 	    $this->load->library('form_validation');
+
 	    $this->load->library('session');
 	    $this->load->library('export');
 		//$this->load->library('grocery_CRUD');
@@ -28,6 +29,8 @@ class Medicamentos extends CI_Controller {
 	    $this->user = $this->ion_auth->user()->row();
 
 	}
+
+	
 
 	function index()
 	{
@@ -261,10 +264,10 @@ class Medicamentos extends CI_Controller {
 
 			$id_reff = $this->input->post('id_reff', true);
 
-
-			$precio_referencia = (empty($this->input->post('precio_referencia', true))) ? NULL : $this->input->post('precio_referencia', true);
-			$cantidad = (empty($this->input->post('cantidad_referencia', true))) ? NULL: $this->input->post('cantidad_referencia', true);
-			$precio_por_unidad = (empty($this->input->post('precio_por_unidad', true))) ? NULL : $this->input->post('precio_por_unidad', true);
+			$dpost = $this->input->post();
+			$precio_referencia = (empty($dpost['precio_referencia'])) ? NULL : $this->input->post('precio_referencia', true);
+			$cantidad = (empty($dpost['cantidad_referencia'])) ? NULL: $this->input->post('cantidad_referencia', true);
+			$precio_por_unidad = (empty($dpost['precio_por_unidad'])) ? NULL : $this->input->post('precio_por_unidad', true);
 
 			$reff = array(
 					"precio_referencia" => $precio_referencia,
@@ -278,6 +281,7 @@ class Medicamentos extends CI_Controller {
 					"fecha_registro" => date("Y-m-d H:i:s"),
 					"comentario" => $this->input->post('comentario', true),
 					"habilitado" => 1,
+					"codigo_de_referencia" => $this->input->post('codigo_de_referencia', true),
 				);
 			
 			$this->medicamentos_model->update_reff($id_reff, $reff);
@@ -288,19 +292,19 @@ class Medicamentos extends CI_Controller {
 
 	function consolidado(){
 		$this->load->model('medicamentos_model');
-		$data['consolidado'] = $this->medicamentos_model->generar_excel_model()->result_array();
+		$data['consolidado'] = $this->medicamentos_model->generar_consolidado()->result_array();
 		$this->layout->view('medicamentos/consolidado', $data);
 	}
 
 	function generar_excel(){
 		$this->load->model('medicamentos_model');
-		$sql = $this->medicamentos_model->generar_excel_model();
+		$sql = $this->medicamentos_model->generar_excel();
 		$this->export->to_excel($sql, 'Base-PRI'); 
 	}
 
-	function generar_excel_all(){
+	/*function generar_excel_all(){
 		$this->load->model('medicamentos_model');
 		$sql = $this->medicamentos_model->generar_excel_model_all();
 		$this->export->to_excel($sql, 'Base-PRI-All'); 
-	}
+	}*/
 }

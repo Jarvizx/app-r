@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<a href="/medicamentos/generar_excel" target="_blank" class="btn btn-default">Descargar Consolidado Parcial</a>
-		<a href="/medicamentos/generar_excel_all" target="_blank" class="btn btn-default">Descargar Consolidado Total</a>
+		<!--<a href="/medicamentos/generar_excel_all" target="_blank" class="btn btn-default">Descargar Consolidado Total</a>-->
 
 	</div>
 	<div class="col-md-12">

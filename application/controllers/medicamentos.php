@@ -152,11 +152,24 @@ class Medicamentos extends CI_Controller {
                         // este campo esta pendiente de definir, ya que se sube el excel o lo generamos con php
                         //$med[$i]['medicamentos']		= $value[30];
                         // es necesario revisar esto
-                        $med[$i]['medicamentos'] = 	$med[$i]['producto'].' ';
-                    	$med[$i]['medicamentos'] .= $med[$i]['cantidad_principio_activo'];
-                    	$med[$i]['medicamentos'] .= (empty($med[$i]['cantidad_principio_activo_secundario'])) ? ' '. $med[$i]['unidad_base'] : '/'. $med[$i]['cantidad_principio_activo_secundario'];
-                    	$med[$i]['medicamentos'] .= (empty($med[$i]['volumen'])) ? ' ' : $med[$i]['volumen'].' - '. $med[$i]['unidad_volumen'];
-                    	$med[$i]['medicamentos'] .= (empty($med[$i]['concentracion'])) ? ' ' : $med[$i]['concentracion'].' - '. $med[$i]['unidad_concentracion'];
+
+                        /*
+								update `medicamentos`
+								set medicamentos_c =  
+								concat(
+								concat(producto, ' ', cantidad_principio_activo),
+								if(cantidad_principio_activo_secundario = '','',concat('/',cantidad_principio_activo_secundario)),
+								concat(' ', unidad_base,' '),
+								if(volumen = '','',concat(' - ', volumen, ' ', unidad_volumen)),
+								if(concentracion = '', '',concat(' - ', concentracion, ' ', unidad_concentracion)),
+								concat(' ', titular));
+                        */
+						// Fix Concat (s: 28-10-2014)
+                        $med[$i]['medicamentos'] = 	$med[$i]['producto'].' '.$med[$i]['cantidad_principio_activo'];
+                    	$med[$i]['medicamentos'] .= (empty($med[$i]['cantidad_principio_activo_secundario'])) ? '' : '/'.$med[$i]['cantidad_principio_activo_secundario'];
+                        $med[$i]['medicamentos'] .= ' '.$med[$i]['unidad_base'].' ';
+                    	$med[$i]['medicamentos'] .= (empty($med[$i]['volumen'])) ? '' : ' - '.$med[$i]['volumen'].' '. $med[$i]['unidad_volumen'];
+                    	$med[$i]['medicamentos'] .= (empty($med[$i]['concentracion'])) ? '' : ' - '.$med[$i]['concentracion'].' '. $med[$i]['unidad_concentracion'];
                     	$med[$i]['medicamentos'] .= ' '.$med[$i]['titular'];
                     	//echo "S: ". $med[$i]['medicamentos'];
                         $med[$i]['usuario_asignado']    = null;

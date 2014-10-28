@@ -13,7 +13,7 @@
 			<?php foreach ($list_asignacion as $key => $value): ?>
 				<tr>
 					<td><?php echo $value['expediente_ficha']; ?></td>
-					<td><p data-toggle="tooltip" data-placement="top" title="<?php echo $value['nombre_db']; ?>"><?php echo $value['medicamentos'].'-'; ?></p></td>
+					<td><p data-toggle="tooltip" data-placement="top" title="<?php echo $value['nombre_db']; ?>"><?php echo $value['medicamentos']; ?></p></td>
 					<td>
 						<select id-med="<?php echo $value['id']; ?>">
 							<option value=""> - Asignar - </option>

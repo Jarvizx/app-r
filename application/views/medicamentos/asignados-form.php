@@ -27,7 +27,7 @@
 				</div>
 				<div class="panel panel-default">
 				  <div class="panel-body">
-					<p><strong>Link: </strong> <?php echo (!empty($value['link_fuente']))? '<a href="'.$value['link_fuente'].'">'.$value['link_fuente'].'</a>': '---'; ?></p>
+					<p><strong>Link: </strong> <?php echo (!empty($value['link_fuente']))? '<a tarjet="_black" href="'.$value['link_fuente'].'" target="_blank">'.$value['link_fuente'].'</a>': '---'; ?></p>
 				  </div>
 				</div>
 				<div class="panel panel-default">
@@ -36,7 +36,7 @@
 						<?php if ($value['nombre_archivo'] == 'Sin Archivos Registrados'): ?>
 							<?php echo $value['nombre_archivo']; ?>
 						<?php else: ?>
-							<a href="/assets/uploads/fuentes/<?php echo $value['nombre_archivo']; ?>"><?php echo $value['nombre_archivo_original']; ?></a></p>
+							<a href="/assets/uploads/fuentes/<?php echo $value['nombre_archivo']; ?>" target="_blank"><?php echo $value['nombre_archivo_original']; ?></a></p>
 						<?php endif ?>
 				  </div>
 				</div>

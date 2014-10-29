@@ -83,6 +83,9 @@
 					<a href="/medicamentos/asignados">Datos Asignados *</a>
 				</li>
 				<li>
+					<a href="/medicamentos/asignados_guardados">Datos Guardados </a>
+				</li>
+				<li>
 					<a href="/auth/logout">Cerrar</a>
 				</li>
 

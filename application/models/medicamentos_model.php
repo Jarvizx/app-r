@@ -138,6 +138,24 @@ class Medicamentos_Model  extends CI_Model  {
                     inner join pais as t4
                     on t3.id_pais = t4.id
                     and t1.usuario_asignado = '.$id_usr.'
+                    and t1.estado = "Medicamentos asignado"
+                    order by t1.orden';
+        $data = $this->db->query($query);
+        return $data->result_array();
+    }
+
+    function asignados_guardados($id_usr = null)
+    {
+        $query = 'SELECT t1.id, t1.estado, t2.medicamentos, t3.nombre as nombre_fuente, t4.nombre as nombre_pais
+                    from precio_reff as t1
+                    inner join medicamentos as t2
+                    on t1.id_medicamento = t2.id
+                    inner join fuentes as t3
+                    on t1.id_fuente = t3.id
+                    inner join pais as t4
+                    on t3.id_pais = t4.id
+                    and t1.usuario_asignado = '.$id_usr.'
+                    and t1.estado = "Guardado"
                     order by t1.orden';
         $data = $this->db->query($query);
         return $data->result_array();
@@ -224,6 +242,59 @@ class Medicamentos_Model  extends CI_Model  {
                 group by t1.id";
 
         return $this->db->query($sql)->result_array();
+    }
+
+    public function fix_mxf(){
+
+        
+        $sql1 = $this->db->query('SELECT id from fuentes where habilitado=1 order by id DESC')->result_array();
+        
+        $sql2 = $this->db->query('SELECT id from medicamentos order by id DESC')->result_array();
+
+        
+        foreach ($sql1 as $key1 => $value1) {
+            
+            foreach ($sql2 as $key2 => $value2) {
+                $sql3 = $this->db->query('SELECT * from precio_reff where id_medicamento = '.$value2['id'].' and id_fuente = '.$value1['id'].'')->result_array();
+                if (empty($sql3)) {
+                    # insert :)
+
+                    //  hack
+                    // new query + order by!
+                    echo "medicamento... " . $value2['id'];
+                    $sqlhk = $this->db->query('SELECT usuario_asignado, estado, max(orden) as orden from precio_reff where estado regexp "Medicamentos asignado|sin asignar" and id_medicamento = '.$value2['id'].'')->result_array();
+                    // /hack
+            
+                    if ($sqlhk[0]['estado'] == 'Guardado') {
+                        $sqlhk[0]['estado'] = 'Medicamentos asignado';
+                    }
+
+                    $fxm = array(
+                                'id' => null,
+                                'id_medicamento' => $value2['id'],
+                                'id_fuente' => $value1['id'],
+                                'precio_referencia' => null,
+                                'cantidad' => null,
+                                'precio_por_unidad' => null,
+                                'casual_no_precio' => null,
+                                'link' => null,
+                                'nombre_archivo' => null,
+                                'nombre_archivo_original' => null,
+                                'estado' => $sqlhk[0]['estado'],
+                                'habilitado' => 1,
+                                'fecha_registro' => date("Y-m-d H:i:s"),
+                                'comentario' => null,
+                                'usuario_asignado' => $sqlhk[0]['usuario_asignado'],
+                                'orden' => ($sqlhk[0]['orden']+1),
+                                'codigo_de_referencia' => null,
+                        );
+                    
+                    $this->db->insert('precio_reff', $fxm);
+            
+                }
+            }
+
+        }
     }
 
 }

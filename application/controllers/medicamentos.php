@@ -245,6 +245,23 @@ class Medicamentos extends CI_Controller {
 		}
 	}
 
+	function asignados_guardados($id_reg = null)
+	{
+		$this->load->model('medicamentos_model');
+
+		if (empty($id_reg)) {
+			$data['medicamentos'] = $this->medicamentos_model->asignados_guardados($this->user->id);
+			$this->layout->view('medicamentos/asignados', $data);
+		}else{
+			// esto deberia ser un query segun la cola de trabajo
+			$data['dta_reff'] = $this->medicamentos_model->find_medicamento_reff($id_reg, $this->user->id);
+			$data['arrowsleft'] = $this->medicamentos_model->find_medicamento_reff($id_reg-1, $this->user->id);
+			$data['arrowsright'] = $this->medicamentos_model->find_medicamento_reff($id_reg+1, $this->user->id);
+
+			$this->layout->view('medicamentos/asignados-form', $data);
+		}
+	}
+
 	function guardar_referencia($id_sig = null)
 	{
 		$this->load->model('medicamentos_model');
@@ -313,6 +330,12 @@ class Medicamentos extends CI_Controller {
 		$this->load->model('medicamentos_model');
 		$sql = $this->medicamentos_model->generar_excel();
 		$this->export->to_excel($sql, 'Base-PRI'); 
+	}
+
+	function fix_mxf(){
+		$this->load->model('medicamentos_model');
+		$this->medicamentos_model->fix_mxf();
+		echo "end...";
 	}
 
 	/*function generar_excel_all(){

@@ -23,6 +23,10 @@
 
 
 <script type="text/javascript">
+	$('#loading-btn').click(function () {
+    	var btn = $(this);
+    	btn.button('loading');
+	});
 	
 	function boton_agregar_fuente(id){
 

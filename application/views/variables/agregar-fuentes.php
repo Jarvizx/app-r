@@ -35,3 +35,9 @@
 <?php echo form_submit('btnSubmit', 'Guardar', "id='loading-btn' class='btn btn-primary' data-loading-text='Guardando...'") ?>
 <?php echo form_close() ?>	
 </div>
+<script type="text/javascript">
+	$('#loading-btn').click(function () {
+    	var btn = $(this);
+    	btn.button('loading');
+	});
+</script>

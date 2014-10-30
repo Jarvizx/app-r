@@ -50,7 +50,7 @@
 						<tr>
 							<th>Nombre</th>
 							<th>Fecha Ultimo Registro</th>
-							<th>Registros asignados/terminados</th>
+							<th>Registros terminados/asignados</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -58,7 +58,7 @@
 							<tr>
 								<td><?php echo $value['username']; ?></td>
 								<td><?php echo $value['r_recha_ultimo_registro']; ?></td>
-								<td><?php echo $value['r_asignados']; ?>/<?php echo $value['r_terminados']; ?></td>
+								<td><?php echo $value['r_terminados']; ?> / <?php echo $value['r_asignados']; ?></td>
 							</tr>
 						<?php endforeach ?>
 					</tbody>

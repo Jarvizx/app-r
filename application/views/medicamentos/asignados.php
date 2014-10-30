@@ -4,6 +4,8 @@
 			<tr>
 				<th>Pais</th>
 				<th>Fuente</th>
+				<th>Principio Activo</th>
+				<th>Forma Farmacéutica</th>
 				<th>Nombre Medicamento</th>
 				<th>Estado</th>
 			</tr>
@@ -20,6 +22,8 @@
 		<tr>
 			<td><?php echo $value['nombre_pais']; ?></td>
 			<td><?php echo $value['nombre_fuente']; ?></td>
+			<td><?php echo $value['q_principio_activo']; ?></td>
+			<td><?php echo $value['forma_farmaceutica']; ?></td>
 			<td><?php echo $value['medicamentos']; ?></td>
 			<td><a href="/medicamentos/asignados/<?php echo $value['id']; ?>"><?php echo $value['estado']; ?></a></td>
 			<!--<td><a class="btn btn-default" href="/medicamentos/asignados/<?php echo $value['id']; ?>">Referenciar</a></td>-->

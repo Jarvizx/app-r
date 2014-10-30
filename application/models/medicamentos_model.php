@@ -129,7 +129,8 @@ class Medicamentos_Model  extends CI_Model  {
 
     function asignados($id_usr = null)
     {
-        $query = 'SELECT t1.id, t1.estado, t2.medicamentos, t3.nombre as nombre_fuente, t4.nombre as nombre_pais
+
+        $query = 'SELECT t1.id, t1.estado, t2.forma_farmaceutica, t2.medicamentos, t2.descripcion_atc as q_principio_activo, t3.nombre as nombre_fuente, t4.nombre as nombre_pais
                     from precio_reff as t1
                     inner join medicamentos as t2
                     on t1.id_medicamento = t2.id
@@ -146,7 +147,7 @@ class Medicamentos_Model  extends CI_Model  {
 
     function asignados_guardados($id_usr = null)
     {
-        $query = 'SELECT t1.id, t1.estado, t2.medicamentos, t3.nombre as nombre_fuente, t4.nombre as nombre_pais
+        $query = 'SELECT t1.id, t1.estado, t2.medicamentos, t2.forma_farmaceutica, t2.descripcion_atc as q_principio_activo, t3.nombre as nombre_fuente, t4.nombre as nombre_pais
                     from precio_reff as t1
                     inner join medicamentos as t2
                     on t1.id_medicamento = t2.id

@@ -7,7 +7,6 @@
 	<h1 class="page-header">Indicadores</h1>
 	<?php $this->load->view('indicadores', $indicadores); ?>
 
-<?php else:?>	
-	<h1 class="page-header">Indicadores</h1>
+<?php endif?>	
+	<h1 class="page-header">Indicadores Usuario</h1>
 	<?php $this->load->view('indicadores_usr', $indicadores); ?>
-<?php endif?>

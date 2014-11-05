@@ -233,14 +233,16 @@ class Medicamentos_Model  extends CI_Model  {
 
     public function num_registros_user()
     {
-        $sql = "SELECT t1.username, max(fecha_registro)r_recha_ultimo_registro, sum(if(estado='Guardado',1,0))r_terminados, count(*) as r_asignados
+        $sql = "SELECT t1.username, max(fecha_registro)r_recha_ultimo_registro, sum(if(estado='Guardado',1,0))r_terminados, count(*) as r_asignados, 
+                SUBSTRING((count(*) - sum(if(estado='Guardado',1,0)))*100 / count(*), 1, 4) as porcentaje_faltante
                 from users as t1
                 inner join users_groups as t2
                 on t1.id = t2.user_id
                 inner join precio_reff as t3
                 on t3.usuario_asignado = t1.id
                 and t2.group_id in(2,3)
-                group by t1.id";
+                group by t1.id
+                order by porcentaje_faltante desc";
 
         return $this->db->query($sql)->result_array();
     }

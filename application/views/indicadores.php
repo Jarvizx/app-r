@@ -47,6 +47,7 @@
 							<th>Nombre</th>
 							<th>Fecha Ultimo Registro</th>
 							<th>Registros terminados/asignados</th>
+							<th>Porcentaje faltante</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -55,6 +56,7 @@
 								<td><?php echo $value['username']; ?></td>
 								<td><?php echo $value['r_recha_ultimo_registro']; ?></td>
 								<td><?php echo $value['r_terminados']; ?> / <?php echo $value['r_asignados']; ?></td>
+								<td><?php echo $value['porcentaje_faltante']; ?> %</td>
 							</tr>
 						<?php endforeach ?>
 					</tbody>

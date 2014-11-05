@@ -245,6 +245,25 @@ class Medicamentos_Model  extends CI_Model  {
         return $this->db->query($sql)->result_array();
     }
 
+    public function num_registros_user_porcentaje($id_usr){
+        $sql = "SELECT
+                SUBSTRING((
+                    sum(if(estado = 'Guardado', 1, 0)) /
+                    sum(if(estado = 'Medicamentos asignado', 1, 0))
+                )*100, 1, 3) as percent
+                from precio_reff where usuario_asignado = ".$id_usr."";
+        return $this->db->query($sql)->result_array();
+    }
+    public function num_registros_user_referenciados($id_usr){
+        $sql = "SELECT count(*) from precio_reff where usuario_asignado = ".$id_usr." and estado = 'Medicamentos asignado'";
+        return $this->db->query($sql)->result_array();
+    }
+
+    public function num_registros_user_guardados($id_usr){
+        $sql = "SELECT count(*) from precio_reff where usuario_asignado = ".$id_usr." and estado = 'Guardado'";
+        return $this->db->query($sql)->result_array();
+    }
+
     public function fix_mxf(){
 
         

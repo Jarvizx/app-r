@@ -3,10 +3,6 @@
 		text-align: center;
 	}
 </style>
-<!--<pre>
-	<?php print_r($indicadores); ?>
-</pre>-->
-
 <div class="row">
 	<div class="col-md-4 num-indicadores">
 		<div class="panel panel-primary">

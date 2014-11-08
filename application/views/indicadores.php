@@ -54,7 +54,7 @@
 						<?php foreach ($indicadores['num_registros_user'] as $key => $value): ?>
 							<tr>
 								<td><?php echo $value['username']; ?></td>
-								<td><?php echo $value['r_recha_ultimo_registro']; ?></td>
+								<td><?php echo $value['r_fecha_ultimo_registro']; ?></td>
 								<td><?php echo $value['r_terminados']; ?> / <?php echo $value['r_asignados']; ?></td>
 								<td><?php echo $value['porcentaje_faltante']; ?> %</td>
 							</tr>

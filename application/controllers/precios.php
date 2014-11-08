@@ -31,8 +31,8 @@ class Precios extends CI_Controller {
 		$data['indicadores']['num_registros_asignados'] = $this->medicamentos_model->num_registros_asignados();
 		$data['indicadores']['num_registros_terminados'] = $this->medicamentos_model->num_registros_terminados();
 		$data['indicadores']['num_registros_user'] = $this->medicamentos_model->num_registros_user();
-		$data['indicadores']['num_registros_user_referenciados'] = $this->medicamentos_model->num_registros_user_referenciados($this->user->id);
-		$data['indicadores']['num_registros_user_guardados'] = $this->medicamentos_model->num_registros_user_guardados($this->user->id);
+		//$data['indicadores']['num_registros_user_referenciados'] = $this->medicamentos_model->num_registros_user_referenciados($this->user->id);
+		//$data['indicadores']['num_registros_user_guardados'] = $this->medicamentos_model->num_registros_user_guardados($this->user->id);
 		$data['indicadores']['num_registros_user_porcentaje'] = $this->medicamentos_model->num_registros_user_porcentaje($this->user->id);
 		$this->layout->view('inicio/home', $data);
 	}

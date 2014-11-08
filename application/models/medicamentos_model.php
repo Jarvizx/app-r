@@ -233,7 +233,7 @@ class Medicamentos_Model  extends CI_Model  {
 
     public function num_registros_user()
     {
-        $sql = "SELECT t1.username, max(fecha_registro)r_recha_ultimo_registro, sum(if(estado='Guardado',1,0))r_terminados, count(*) as r_asignados, 
+        $sql = "SELECT t1.username, max(fecha_registro) as r_fecha_ultimo_registro, sum(if(estado='Guardado',1,0))r_terminados, count(*) as r_asignados, 
                 SUBSTRING((count(*) - sum(if(estado='Guardado',1,0)))*100 / count(*), 1, 4) as porcentaje_faltante
                 from users as t1
                 inner join users_groups as t2
@@ -248,12 +248,29 @@ class Medicamentos_Model  extends CI_Model  {
     }
 
     public function num_registros_user_porcentaje($id_usr){
-        $sql = "SELECT
+        
+        $sql = "SELECT t1.username, 
+                max(fecha_registro) as r_fecha_ultimo_registro, 
+                sum(if(estado='Guardado',1,0)) as r_terminados, 								
+                sum(if(estado='Medicamentos asignado',1,0)) as r_por_terminar,
+                count(*) as r_asignados, 
+                t3.usuario_asignado,
+                SUBSTRING(sum(if(estado='Guardado',1,0))*100 / count(*), 1, 4) as porcentaje_realizado
+                from users as t1
+                inner join users_groups as t2
+                on t1.id = t2.user_id
+                inner join precio_reff as t3
+                on t3.usuario_asignado = t1.id
+                and t2.group_id in(2,3)
+                group by t1.id
+                order by porcentaje_realizado desc";
+
+        /*$sql = "SELECT
                 SUBSTRING((
                     sum(if(estado = 'Guardado', 1, 0)) /
                     sum(if(estado = 'Medicamentos asignado', 1, 0))
                 )*100, 1, 3) as percent
-                from precio_reff where usuario_asignado = ".$id_usr."";
+                from precio_reff where usuario_asignado = ".$id_usr."";*/
         return $this->db->query($sql)->result_array();
     }
     public function num_registros_user_referenciados($id_usr){
